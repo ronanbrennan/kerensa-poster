@@ -102,11 +102,11 @@
     .kicker {
       font-family: var(--sans);
       font-weight: 600;
-      font-size: 1.55cqw;
-      letter-spacing: .42em;
+      font-size: 2.05cqw;
+      letter-spacing: .36em;
       text-transform: uppercase;
       color: var(--terra);
-      margin-bottom: 1.4cqw;
+      margin-bottom: 1.6cqw;
     }
 
     .title {
@@ -122,7 +122,7 @@
       font-family: var(--serif);
       font-style: italic;
       font-weight: 500;
-      font-size: 3.4cqw;
+      font-size: 3.85cqw;
       color: var(--terra);
       margin-top: 1.2cqw;
     }
@@ -172,12 +172,31 @@
       flex: 1 1 0;
     }
 
+    /* Lower band holds the tall artist photo + a 2×2 block; taller than a
+       normal row so the portrait photo has room. */
+    .art-row.band {
+      flex: 2.15 1 0;
+    }
+
+    /* 2×2 block of paintings beside the photo. */
+    .art-quad {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      min-width: 0;
+      min-height: 0;
+    }
+
     .art {
       position: relative;
       min-width: 0;
       border-radius: var(--radius);
       overflow: hidden;
       background: var(--paper-2);
+      /* hairline border defines each painting's edge so light-toned ones don't
+         melt into the cream paper — prints reliably (unlike the shadow). */
+      border: 0.12cqw solid rgba(46, 59, 44, .3);
       box-shadow: 0 6px 18px rgba(46, 37, 29, .18);
     }
 
@@ -218,7 +237,7 @@
     .f-col p,
     .f-col a {
       font-family: var(--sans);
-      font-size: 1.7cqw;
+      font-size: 1.95cqw;
       line-height: 1.45;
       color: var(--cream);
       text-decoration: none;
@@ -227,7 +246,7 @@
     .f-col .big {
       font-family: var(--serif);
       font-weight: 600;
-      font-size: 2.3cqw;
+      font-size: 2.6cqw;
       line-height: 1.1;
       margin-bottom: .6cqw;
     }
@@ -241,13 +260,16 @@
       margin: .2cqw 0 1.4cqw;
     }
 
-    /* Follow block: QR tiles side by side, each labelled. */
+    /* Follow block: QR tiles side by side, each labelled. Equal fixed width
+       keeps them evenly spaced regardless of how long a handle is. */
     .follow {
       display: flex;
-      gap: 1.7cqw;
+      gap: 1.3cqw;
     }
 
     .qr {
+      flex: 0 0 auto;
+      width: 10.5cqw;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -264,8 +286,8 @@
 
     .qr figcaption {
       font-family: var(--sans);
-      font-size: 1.25cqw;
-      line-height: 1.3;
+      font-size: 1.3cqw;
+      line-height: 1.35;
       text-align: center;
       color: var(--cream);
     }
@@ -273,6 +295,46 @@
     .qr figcaption b {
       color: var(--ochre);
       font-weight: 600;
+    }
+
+    /* Secondary sponsor credit — sits quietly on the paper below the footer
+       panel. Brendan's film-industry art-hire badge (rebuilt as a crisp vector
+       from the supplied photo) + contact. Deliberately small: Clermont is the
+       lead sponsor and venue, shown in the green panel above. */
+    .sponsor {
+      flex: 0 0 auto;
+      margin-top: -1.3cqw;
+      /* tighten the 3cqw flex gap from the footer */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6cqw;
+    }
+
+    .sponsor img {
+      width: 6.4cqw;
+      height: auto;
+    }
+
+    .sponsor .sp-text {
+      font-family: var(--sans);
+      font-size: 1.5cqw;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    .sponsor .sp-text .sp-lead {
+      display: block;
+      font-size: 1.15cqw;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--terra);
+      font-weight: 600;
+      margin-bottom: .25cqw;
+    }
+
+    .sponsor .sp-text b {
+      font-weight: 700;
     }
 
     /* placeholder styling — strip these once real content is in -------------- */
@@ -378,21 +440,31 @@
             <img src="artwork/heartfelt.jpg" alt="Heartfelt">
           </figure>
         </div>
-        <div class="art-row">
-          <figure class="art" style="flex:0.77">
-            <img src="artwork/treelined-pathway-bright.jpg" alt="Tree-lined pathway">
+        <!-- Lower band: tall artist photo beside a 2×2 block of paintings.
+             Tune the photo's flex (its column width) and .art-row.band's flex
+             (the band height) to rebalance. -->
+        <div class="art-row band">
+          <figure class="art" style="flex:0.62">
+            <img src="artist-photos/kerensa-sunflowers2.jpg" alt="The artist, Kerensa D'Arcy Barr" style="object-position: center top">
           </figure>
-          <figure class="art" style="flex:1.00">
-            <img src="artwork/seascape.jpg" alt="Seascape">
-          </figure>
-        </div>
-        <div class="art-row">
-          <figure class="art" style="flex:1.00">
-            <img src="artwork/new-beginnings.jpg" alt="New Beginnings">
-          </figure>
-          <figure class="art" style="flex:1.00">
-            <img src="artwork/mind-your-self.jpg" alt="Mind Your Self">
-          </figure>
+          <div class="art-quad">
+            <div class="art-row">
+              <figure class="art" style="flex:1.00">
+                <img src="artwork/treelined-pathway-bright.jpg" alt="Tree-lined pathway">
+              </figure>
+              <figure class="art" style="flex:1.00">
+                <img src="artwork/flowers-mountains-no-frame.jpg" alt="Flowers and mountains">
+              </figure>
+            </div>
+            <div class="art-row">
+              <figure class="art" style="flex:1.00">
+                <img src="artwork/new-beginnings.jpg" alt="New Beginnings">
+              </figure>
+              <figure class="art" style="flex:1.00">
+                <img src="artwork/mind-your-self.jpg" alt="Mind Your Self">
+              </figure>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -405,7 +477,7 @@
         </div>
         <div class="f-col">
           <h3>When</h3>
-          <p class="big">Fri 24 &amp; Sat 25 July 2026</p>
+          <p><b>Fri 24 &amp; Sat 25 July 2026</b></p>
           <p style="white-space:nowrap">Fri · 19:00–22:00<br>Sat · 11:00–17:00</p>
         </div>
         <!-- Follow: each link as a scannable QR with its logo in the centre
@@ -413,12 +485,12 @@
              or URL changes. -->
         <div class="follow">
           <figure class="qr">
-            <img src="qr-instagram.svg" alt="Instagram QR code">
-            <figcaption>Instagram<br><b>@art_of_kerensa</b></figcaption>
-          </figure>
-          <figure class="qr">
             <img src="qr-facebook.svg" alt="Facebook QR code">
             <figcaption>Facebook<br><b>artofkerensa</b></figcaption>
+          </figure>
+          <figure class="qr">
+            <img src="qr-instagram.svg" alt="Instagram QR code">
+            <figcaption>Instagram<br><b>@art_of_kerensa</b></figcaption>
           </figure>
           <figure class="qr">
             <img src="qr-screenhub.svg" alt="Clermont Screen Hub website QR code">
@@ -426,6 +498,17 @@
           </figure>
         </div>
       </footer>
+
+      <!-- Secondary sponsor: Brendan — artwork hire/sale to the film industry.
+           Logo rebuilt as a crisp vector (branding/brendan-logo.svg) from the
+           supplied photo. -->
+      <div class="sponsor">
+        <img src="branding/brendan-logo.svg" alt="For rent or for sale to the film industry">
+        <p class="sp-text">
+          <span class="sp-lead">Artwork hire for film &amp; TV</span>
+          Brendan&nbsp;·&nbsp;<b>087&nbsp;910&nbsp;5646</b>
+        </p>
+      </div>
 
       <!-- ===== END EXHIBITION DETAILS ===================================== -->
 
