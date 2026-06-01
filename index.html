@@ -30,6 +30,9 @@
       /* deep muted pine green — footer (var name kept) */
       --ochre: #C49A4C;
       /* gold secondary accent          */
+      --gold-bright: #E2C074;
+      /* brighter gold — for small REVERSED text on the dark footer, where the
+         standard ochre is too low-contrast and risks filling in on press   */
       --sage: #7C9A6B;
       /* mid sage                       */
       --cream: #F4ECDB;
@@ -196,7 +199,7 @@
       background: var(--paper-2);
       /* hairline border defines each painting's edge so light-toned ones don't
          melt into the cream paper — prints reliably (unlike the shadow). */
-      border: 0.12cqw solid rgba(46, 59, 44, .3);
+      border: 0.16cqw solid rgba(46, 59, 44, .62);
       box-shadow: 0 6px 18px rgba(46, 37, 29, .18);
     }
 
@@ -226,17 +229,19 @@
 
     .f-col h3 {
       font-family: var(--sans);
-      font-weight: 600;
-      font-size: 1.35cqw;
-      letter-spacing: .26em;
+      font-weight: 700;
+      font-size: 1.55cqw;
+      letter-spacing: .24em;
       text-transform: uppercase;
-      color: var(--ochre);
+      color: var(--gold-bright);
       margin-bottom: 1cqw;
     }
 
     .f-col p,
     .f-col a {
       font-family: var(--sans);
+      /* weight 500 (not 400) so reversed strokes survive dot gain on press */
+      font-weight: 500;
       font-size: 1.95cqw;
       line-height: 1.45;
       color: var(--cream);
@@ -245,7 +250,7 @@
 
     .f-col .big {
       font-family: var(--serif);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 2.6cqw;
       line-height: 1.1;
       margin-bottom: .6cqw;
@@ -286,15 +291,16 @@
 
     .qr figcaption {
       font-family: var(--sans);
-      font-size: 1.3cqw;
+      font-weight: 500;
+      font-size: 1.5cqw;
       line-height: 1.35;
       text-align: center;
       color: var(--cream);
     }
 
     .qr figcaption b {
-      color: var(--ochre);
-      font-weight: 600;
+      color: var(--gold-bright);
+      font-weight: 700;
     }
 
     /* Secondary sponsor credit — sits quietly on the paper below the footer
@@ -402,6 +408,51 @@
       }
     }
 
+    /* ============== PRESS / WET-OFFSET PDF (opt-in: poster.html?bleed) =========
+       Adds a 3mm bleed all round + corner crop marks, so a professional printer
+       can trim to 297×420 without ever exposing white paper if the blade drifts.
+       Activated only when <html class="bleed"> (set by the ?bleed query below),
+       so the normal ⌘P → A3 print is completely unaffected. */
+    @page bleed {
+      size: 303mm 426mm;
+      margin: 0;
+    }
+
+    .cropmarks {
+      display: none;
+    }
+
+    @media print {
+      html.bleed body {
+        /* the page is the 303×426 sheet; centre the 297×420 trim in it so the
+           background gradient continues 3mm into the bleed on every side */
+        width: 303mm;
+        height: 426mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(120% 80% at 50% -10%, var(--paper) 0%, var(--paper-2) 100%);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      html.bleed .stage {
+        page: bleed;
+      }
+
+      html.bleed .cropmarks {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 303mm;
+        height: 426mm;
+        z-index: 50;
+        pointer-events: none;
+      }
+    }
+
     /* tighten the floating shadow on very small screens */
     @media screen and (max-width:520px) {
       body {
@@ -445,7 +496,8 @@
              (the band height) to rebalance. -->
         <div class="art-row band">
           <figure class="art" style="flex:0.62">
-            <img src="artist-photos/kerensa-sunflowers2.jpg" alt="The artist, Kerensa D'Arcy Barr" style="object-position: center top">
+            <img src="artist-photos/kerensa-sunflowers2.jpg" alt="The artist, Kerensa D'Arcy Barr"
+              style="object-position: center top">
           </figure>
           <div class="art-quad">
             <div class="art-row">
@@ -471,7 +523,7 @@
       <!-- VENUE · DATES · SOCIALS -->
       <footer class="footer">
         <div class="f-col">
-          <h3>Venue</h3>
+          <h3>Venue &amp; Sponsor</h3>
           <img class="venue-logo" src="branding/sh-logo-white.png" alt="Clermont Screen Hub">
           <p>Rathnew, Co. Wicklow<br>A67&nbsp;X566</p>
         </div>
@@ -517,6 +569,35 @@
 
   <div class="hint">To print: <b>⌘P</b> → paper <b>A3</b>, margins <b>None</b>, Background graphics <b>on</b> → Save as
     PDF</div>
+
+  <!-- Crop marks for the press PDF (shown only with ?bleed). Coordinates in mm:
+       303×426 sheet, 297×420 trim centred → trim box x:3–300, y:3–423. Each
+       corner gets two 3mm hairlines meeting at the trim corner, sitting in the
+       bleed (trimmed away). -->
+  <svg class="cropmarks" viewBox="0 0 303 426" preserveAspectRatio="none" width="303mm" height="426mm"
+    aria-hidden="true">
+    <g stroke="#000" stroke-width="0.12">
+      <!-- top-left -->
+      <line x1="0" y1="3" x2="3" y2="3" />
+      <line x1="3" y1="0" x2="3" y2="3" />
+      <!-- top-right -->
+      <line x1="300" y1="3" x2="303" y2="3" />
+      <line x1="300" y1="0" x2="300" y2="3" />
+      <!-- bottom-left -->
+      <line x1="0" y1="423" x2="3" y2="423" />
+      <line x1="3" y1="423" x2="3" y2="426" />
+      <!-- bottom-right -->
+      <line x1="300" y1="423" x2="303" y2="423" />
+      <line x1="300" y1="423" x2="300" y2="426" />
+    </g>
+  </svg>
+
+  <script>
+    // Opt into the bleed/crop-marks layout for the press PDF via ?bleed (or #bleed).
+    if (/bleed/.test(location.search) || location.hash.indexOf('bleed') !== -1) {
+      document.documentElement.classList.add('bleed');
+    }
+  </script>
 
 </body>
 

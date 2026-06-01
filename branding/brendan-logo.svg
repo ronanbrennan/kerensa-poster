@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img"
      aria-label="For rent or for sale to the film industry">
   <defs>
-    <path id="brendan-top" d="M 18,120 A 102,102 0 0 1 222,120"/>
-    <path id="brendan-bot" d="M 22,120 A 98,98 0 0 0 218,120"/>
+    <path id="brendan-top" d="M 22.5,120 A 97.5,97.5 0 0 1 217.5,120"/>
+    <path id="brendan-bot" d="M 10,120 A 110,110 0 0 0 230,120"/>
   </defs>
   <g fill="#2E3B2C" stroke="#2E3B2C">
     <!-- rings -->
@@ -11,20 +11,21 @@
 
     <!-- curved wordmark -->
     <g stroke="none" font-family="Georgia, 'Times New Roman', serif"
-       font-weight="700" font-size="20" letter-spacing="1.2"
-       text-anchor="middle">
-      <text><textPath href="#brendan-top" startOffset="50%">FOR RENT OR FOR SALE</textPath></text>
-      <text><textPath href="#brendan-bot" startOffset="50%">TO THE FILM INDUSTRY</textPath></text>
+       font-weight="700" text-anchor="middle">
+      <text font-size="16.8" letter-spacing="0"><textPath href="#brendan-top" startOffset="50%">ART FOR RENT OR FOR SALE</textPath></text>
+      <text font-size="19.5" letter-spacing="1.85"><textPath href="#brendan-bot" startOffset="50%">TO THE FILM INDUSTRY</textPath></text>
     </g>
 
-    <!-- side ornaments (4-point stars) where the two arcs meet -->
+    <!-- side ornaments where the two arcs meet — diamonds centred in the band
+         between the rings (radius 103 = midpoint of r90 and r116) -->
     <g stroke="none">
-      <path d="M 22,120 l 6,-5 l 5,5 l -5,5 z M 28,115 l 5,5 l -5,5 l -6,-5 z"/>
-      <path d="M 218,120 l -6,-5 l -5,5 l 5,5 z M 212,115 l -5,5 l 5,5 l 6,-5 z"/>
+      <path d="M 17,114 l 6,6 l -6,6 l -6,-6 z"/>
+      <path d="M 223,114 l 6,6 l -6,6 l -6,-6 z"/>
     </g>
 
-    <!-- movie camera -->
-    <g>
+    <!-- movie camera — enlarged ~35% and recentred on the badge centre so it
+         fills more of the inner circle. (bbox centre was ~130,115.5) -->
+    <g transform="translate(120 120) scale(1.35) translate(-130 -115.5)">
       <!-- body -->
       <rect x="88" y="112" width="60" height="40" rx="4" stroke="none"/>
       <!-- lens horn -->
